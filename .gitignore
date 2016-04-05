@@ -2,6 +2,10 @@ logs/*
 !.gitkeep
 node_modules/
 bower_components/
+e2e-tests/
 tmp
 .DS_Store
 .idea
+helloWord.iml
+**/*.log
+lib/

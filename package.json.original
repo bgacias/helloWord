@@ -40,7 +40,7 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "prestart": "npm config set HTTP_PROXY:http://******:*****@10.215.9.52:3128 npm install --verbose",
+    "prestart": "npm install",
     "start": "http-server -a localhost -p 3000 -c-1",
     "pretest": "npm install",
     "test": "karma start karma.conf.js",
