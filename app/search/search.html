@@ -1,0 +1,7 @@
+<form ng-submit="search()">
+    <input type="search" name="search" ng-model="term"/>
+    <button>Search</button>
+    <div>
+        <pre>{{ searchResults | json}}</pre>
+    </div>
+</form>

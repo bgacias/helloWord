@@ -2,16 +2,18 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version',
-  'myApp.vista3'
-]).
+    'ngRoute',
+    'myApp.view1',
+    'myApp.view2',
+    'myApp.vista3',
+    'myApp.search',
+    'myApp.version',
+    'ngMockE2E'
+])
 
 
 
-config(['$routeProvider', function($routeProvider) {
+.config(['$routeProvider', function($routeProvider) {
     $routeProvider.otherwise({redirectTo: '/view1'});
 }])
 
