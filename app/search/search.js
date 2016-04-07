@@ -36,7 +36,8 @@ angular.module('myApp.search', ['ngRoute'])
                 return $http.get('/edit/' + id);
             },
             save: function(data) {
-                return $http.post('/edit/' + data.id, data);
+                console.log("url invocada al desar:"+'/desa/' + data.id);
+                return $http.post('/desa/' + data.id, data);
             }
         };
         return service;

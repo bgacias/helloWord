@@ -78,6 +78,7 @@ angular.module('myApp')
 
         this.update = function (id, dataItem) {
             // find the game that matches that id
+            console.log("entrant update .."+id);
             var people = this.getData();
             var match = null;
             for (var i = 0; i < people.length; i++) {
@@ -90,6 +91,9 @@ angular.module('myApp')
                 return {};
             }
             angular.extend(match, dataItem);
+            console.log("despres de update>>>>");
+            console.log(match);
+            console.log("........................................................");
             return match;
         };
 
@@ -131,12 +135,18 @@ angular.module('myApp')
             return [200, results, {Location: '/edit/' + id}];
         });
 
-        $httpBackend.whenPOST(/\/edit\/\d+/).respond(function(method, url, data) {
+        //$httpBackend.whenPOST(/\/edit\/\d+/).respond(function(method, url, data) {
+        $httpBackend.whenPOST(/\/desa\/(.*)/).respond(function(method, url, data) {
             var params = angular.fromJson(data);
-            // parse the matching URL to pull out the id (/edit/:id)
             var id = url.split('/')[2];
+            console.log("abans de update>>>> cridant el ServerDataModel.update amb variables...")
+            console.log(id);
+            console.log(params);
+            console.log("...............");
             var person = ServerDataModel.update(id, params);
             return [201, person, { Location: '/edit/' + id }];
+
+
         });
 
         $httpBackend.whenGET(/search\/edit.html/).passThrough();
