@@ -1,0 +1,15 @@
+.searchResults table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    border-spacing: 5px;
+}
+table.searchResults tr:nth-child(even) {
+    background-color: #eee;
+}
+table.searchResults tr:nth-child(odd) {
+    background-color:#fff;
+}
+
+table.searchResults td {
+    padding: 10px;
+}
