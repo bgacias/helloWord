@@ -63,20 +63,83 @@ angular.module('myApp')
                 return list;
             }
         };
+
+        this.find = function (id) {
+            // find the game that matches that id
+            var list = $.grep(this.getData(), function (element, index) {
+                return (element.id == id);
+            });
+            if (list.length === 0) {
+                return {};
+            }
+            // even if list contains multiple items, just return first one
+            return list[0];
+        };
+
+        this.update = function (id, dataItem) {
+            // find the game that matches that id
+            var people = this.getData();
+            var match = null;
+            for (var i = 0; i < people.length; i++) {
+                if (people[i].id == id) {
+                    match = people[i];
+                    break;
+                }
+            }
+            if (!angular.isObject(match)) {
+                return {};
+            }
+            angular.extend(match, dataItem);
+            return match;
+        };
+
+
+
     })
 
     .run(function ($httpBackend, ServerDataModel) {
-        $httpBackend.whenGET(/\/localitza\//).respond(function (method, url, data) {
+        $httpBackend.whenGET(/\/localitza\/(.*)/).respond(function (method, url, data) {
+            var results;
+            var term= url.split('/')[2];
+            console.log("term del scope="+term +" longitud="+term.length) ;
+            console.log("angular.isUndefined="+ angular.isUndefined(term)) ;
             // parse the matching URL to pull out the term (/localitza/:term)
-            var term="";
-            term+= url.split('/')[2];
-            console.log("term cercat:"+term) ;
-            var results = ServerDataModel.search(term);
+            if (angular.isUndefined(term)){
+                results = ServerDataModel.search("");
+                return [200, results, {Location: '/localitza/'}];
+            } else{
+                console.log("term cercat:"+term) ;
+                 results = ServerDataModel.search(term);
+                return [200, results, {Location: '/localitza/' + term}];
+            }
+        });
 
-            return [200, results, {Location: '/localitza/' + term}];
+        $httpBackend.whenGET(/\/localitza\//).respond(function (method, url, data) {
+            var results = ServerDataModel.search("");
+            return [200, results];
         });
 
         $httpBackend.whenGET(/search\/search.html/).passThrough();
         $httpBackend.whenGET(/view/).passThrough();
         $httpBackend.whenGET(/vista/).passThrough();
+
+
+        $httpBackend.whenGET(/\/edit\/\d+/).respond(function (method, url, data) {
+            // parse the matching URL to pull out the id (/edit/:id)
+            var id = url.split('/')[2];
+            var results = ServerDataModel.find(id);
+            return [200, results, {Location: '/edit/' + id}];
+        });
+
+        $httpBackend.whenPOST(/\/edit\/\d+/).respond(function(method, url, data) {
+            var params = angular.fromJson(data);
+            // parse the matching URL to pull out the id (/edit/:id)
+            var id = url.split('/')[2];
+            var person = ServerDataModel.update(id, params);
+            return [201, person, { Location: '/edit/' + id }];
+        });
+
+        $httpBackend.whenGET(/search\/edit.html/).passThrough();
+
+
     });
