@@ -33,7 +33,7 @@
     "karma-jasmine": "^0.3.8",
     "karma-junit-reporter": "^0.4.1",
     "protractor": "^2.1.0",
-    "shelljs": "^0.2.6",
+    "shelljs": ">=0.8.5"
     "tslint": "^3.6.0",
     "tslint-stylish": "2.1.0-beta",
     "typescript": "^1.8.9"
